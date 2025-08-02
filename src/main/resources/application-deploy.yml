@@ -1,0 +1,16 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DEPLOY_DB_URL}
+    username: ${DEPLOY_DB_USERNAME}
+    password: ${DEPLOY_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update # 애플리케이션 실행 시 엔티티에 맞춰 테이블 변경
+    properties:
+      hibernate:
+        format_sql: true # SQL 쿼리를 보기 좋게 포맷팅
+        database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true # 실행되는 SQL 쿼리 로그 출력
