@@ -15,9 +15,11 @@ import java.util.List;
 public class AnimeController {
     private final RecommendService recommendService;
 
-    @PostMapping("/recommend")
-    public ResponseEntity<List<Integer>> recommend(@RequestBody RecommendationRequest request) {
-        List<Integer> recommendedAnimeIds = recommendService.getRecommendedAnimes(request);
+    @PostMapping("/recommend/{memberId}")
+    public ResponseEntity<List<Integer>> recommend(
+            @PathVariable Long memberId // @PathVariable로 memberId 받기
+            ,@RequestBody RecommendationRequest request) {
+        List<Integer> recommendedAnimeIds = recommendService.getRecommendedAnimes(memberId, request);
         return ResponseEntity.ok(recommendedAnimeIds);
     }
     /**

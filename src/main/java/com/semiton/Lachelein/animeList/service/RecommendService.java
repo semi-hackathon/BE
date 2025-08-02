@@ -4,6 +4,8 @@ import com.semiton.Lachelein.animeList.domain.AnimeList;
 import com.semiton.Lachelein.animeList.dto.AnimeListResponse;
 import com.semiton.Lachelein.animeList.dto.RecommendationRequest;
 import com.semiton.Lachelein.animeList.repository.AnimeListRepository;
+import com.semiton.Lachelein.member.entity.Member;
+import com.semiton.Lachelein.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -23,15 +25,21 @@ public class RecommendService {
     private final ChatClient chatClient;
     private final TmdbService tmdbService ;
     private final AnimeListRepository animeListRepository;
+    private final MemberRepository memberRepository; // MemberRepository 주입
 
-    public RecommendService(ChatClient.Builder chatClientBuilder, TmdbService tmdbService, AnimeListRepository animeListRepository) {
+
+    public RecommendService(ChatClient.Builder chatClientBuilder, TmdbService tmdbService, AnimeListRepository animeListRepository, MemberRepository memberRepository) {
         this.chatClient =chatClientBuilder.build();
         this.tmdbService = tmdbService;
         this.animeListRepository = animeListRepository;
+        this.memberRepository = memberRepository;
     }
 
     @Transactional
-    public List<Integer> getRecommendedAnimes(RecommendationRequest recommendationRequest) {
+    public List<Integer> getRecommendedAnimes(Long memberId ,RecommendationRequest recommendationRequest) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다. ID: " + memberId));
+
         // 1. 상세한 영문 프롬프트 생성
         String promptString = """
                 아래 사용자의 취향을 바탕으로 애니메이션 5개를 추천해 줘.
@@ -68,7 +76,7 @@ public class RecommendService {
                 .map(Optional::get)
                 .collect(Collectors.toList());
         if (!recommendedAnimeIds.isEmpty()) {
-            AnimeList animeList = new AnimeList(recommendedAnimeIds);
+            AnimeList animeList = new AnimeList(member, recommendedAnimeIds);
             animeListRepository.save(animeList);
         }
         return recommendedAnimeIds;
