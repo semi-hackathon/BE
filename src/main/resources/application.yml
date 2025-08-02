@@ -1,5 +1,21 @@
 server:
   port: 8080
+
 spring:
   application:
     name: Lachelein
+
+  datasource:
+    url: jdbc:mariadb://localhost:3306/lachelein_db
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: ${DB_NAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+kakao:
+  client: ${KAKAO_KEY}
+  redirect-uri: ${KAKAO_URL}
