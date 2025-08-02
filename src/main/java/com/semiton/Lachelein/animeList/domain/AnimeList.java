@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class AnimeList {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
