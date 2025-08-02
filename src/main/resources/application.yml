@@ -8,11 +8,11 @@ spring:
     active: local
   config:
     import: optional:file:.env[.properties]
+
   jpa:
     properties:
       hibernate:
         format_sql: true # SQL 로그를 보기 좋게 포맷팅
-
   #spring ai 관련
   ai:
     openai:
@@ -28,3 +28,6 @@ tmdb:
   api:
     key: ${TMDB_API_KEY}
     url: ${TMDB_BASE_URL}
+kakao:
+  client: ${KAKAO_KEY}
+  redirect-uri: ${KAKAO_URL}

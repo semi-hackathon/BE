@@ -1,0 +1,24 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>카카오 로그인 결과</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h2>카카오 로그인 결과</h2>-->
+
+<!--<div th:if="${apiResponse != null and apiResponse.data != null}">-->
+<!--    <p>이름: <span th:text="${apiResponse.data.name}"></span></p>-->
+<!--    <p>이메일: <span th:text="${apiResponse.data.email}"></span></p>-->
+<!--    <p>액세스 토큰: <span th:text="${apiResponse.data.token.accessToken}"></span></p>-->
+
+<!--    <form th:action="@{/auth/kakao/logout}" method="get">-->
+<!--        <input type="hidden" name="accessToken" th:value="${apiResponse.data.token.accessToken}" />-->
+<!--        <button type="submit">카카오 로그아웃</button>-->
+<!--    </form>-->
+<!--</div>-->
+<!--<div th:if="${apiResponse == null or apiResponse.data == null}">-->
+<!--    <p>카카오 로그인 정보가 없습니다. 다시 시도해주세요.</p>-->
+<!--    <a th:href="@{/}">홈으로 돌아가기</a>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
