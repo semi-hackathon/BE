@@ -24,14 +24,19 @@ jobs:
           java-version: '17'
           distribution: 'microsoft'
 
-      - name: Build with Maven
-        run: mvn clean install
+      - name: Build with Gradle #애저가 자동으로 생성한 스크립트는 maven을 사용 -> Gradle로 변경
+        run: ./gradlew clean bootJar
+      
+      - name: Rename JAR to app.jar
+        run: |
+          JAR_PATH=$(find build/libs -name "*SNAPSHOT.jar" | grep -v "plain" | head -n 1)
+          cp "$JAR_PATH" build/libs/app.jar
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: build/libs/app.jar
 
   deploy:
     runs-on: ubuntu-latest
@@ -60,4 +65,6 @@ jobs:
           app-name: 'Lachelein'
           slot-name: 'Production'
           package: '*.jar'
+          startup-command: 'java -jar /home/site/wwwroot/app.jar'
+
           
