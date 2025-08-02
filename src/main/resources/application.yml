@@ -5,29 +5,25 @@ spring:
   application:
     name: Lachelein
   profiles:
-    active: local
+    active: local-mariadb
   config:
     import: optional:file:.env[.properties]
 
-  jpa:
-    properties:
-      hibernate:
-        format_sql: true # SQL 로그를 보기 좋게 포맷팅
-  #spring ai 관련
-  ai:
-    openai:
-      api-key: ${GEMINI_API_KEY}
-      chat:
-        base-url: ${GEMINI_BASE_URL}
-        options:
-          model: gemini-2.0-flash
-          temperature: 0.7
-        completions-path: ${COMPLETION_URL}
-#tmdb 관련
 tmdb:
   api:
     key: ${TMDB_API_KEY}
     url: ${TMDB_BASE_URL}
+
 kakao:
   client: ${KAKAO_KEY}
   redirect-uri: ${KAKAO_URL}
+
+ai:
+  openai:
+    api-key: ${GEMINI_API_KEY}
+    chat:
+      base-url: ${GEMINI_BASE_URL}
+      options:
+        model: gemini-2.0-flash
+        temperature: 0.7
+      completions-path: ${COMPLETION_URL}
